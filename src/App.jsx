@@ -53,20 +53,27 @@ const average = (arr) => {
 
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
+  fetch("http://www.omdbapi.com?apikey=7d57d30b&s=interstellar")
+    .then((res) => res.json())
+    .then((data) => console.log(data));
   return (
     <>
-      <Navbar movies={movies} />
-      <Main movies={movies} />
+      <Navbar>
+        <Search />
+        <NumResult movies={movies} />
+      </Navbar>
+      <Main>
+        <ListBox movies={movies} />
+      </Main>
     </>
   );
 }
 
-function Navbar({ movies }) {
+function Navbar({ children }) {
   return (
     <nav className="nav-bar">
       <Logo />
-      <Search />
-      <NumResult movies={movies} />
+      {children}
     </nav>
   );
 }
@@ -102,10 +109,10 @@ function NumResult({ movies }) {
   );
 }
 
-function Main({ movies }) {
+function Main({ children }) {
   return (
     <main className="main">
-      <ListBox movies={movies} />
+      {children}
       <WatchedBox />
     </main>
   );
