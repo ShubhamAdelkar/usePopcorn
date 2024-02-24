@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const tempMovieData = [
   {
@@ -48,14 +48,41 @@ const tempWatchedData = [
 ];
 
 const average = (arr) => {
-  arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
+  if (arr.length === 0) return 0; // or return NaN
+  return arr.reduce((acc, cur) => acc + cur, 0) / arr.length;
 };
 
 export default function App() {
-  const [movies, setMovies] = useState(tempMovieData);
-  fetch("http://www.omdbapi.com?apikey=7d57d30b&s=interstellar")
-    .then((res) => res.json())
-    .then((data) => console.log(data));
+  const [movies, setMovies] = useState([]);
+  const [watched, setWatched] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const query = "sfhjj"; // movie name
+
+  useEffect(function () {
+    async function fetchMovies() {
+      try {
+        setIsLoading(true);
+        const res = await fetch(
+          `https://www.omdbapi.com?apikey=7d57d30b&s=${query}`
+        );
+
+        if (!res.ok)
+          throw new Error("Something went wrong with fetching movies");
+
+        const data = await res.json();
+        if (data.Response === "False") throw new Error("Movie not found"); // if movie name is not make sense.
+        
+        setMovies(data.Search);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchMovies();
+  }, []);
+
   return (
     <>
       <Navbar>
@@ -63,9 +90,23 @@ export default function App() {
         <NumResult movies={movies} />
       </Navbar>
       <Main>
-        <ListBox movies={movies} />
+        <ListBox movies={movies} isLoading={isLoading} error={error} />
+        <WatchedBox watched={watched} />
       </Main>
     </>
+  );
+}
+
+function Loader() {
+  return <p className="loader">Loading...</p>;
+}
+
+function ErrorMessage({ err }) {
+  return (
+    <p className="error">
+      <span>⛔</span>
+      {err}
+    </p>
   );
 }
 
@@ -110,15 +151,10 @@ function NumResult({ movies }) {
 }
 
 function Main({ children }) {
-  return (
-    <main className="main">
-      {children}
-      <WatchedBox />
-    </main>
-  );
+  return <main className="main">{children}</main>;
 }
 
-function ListBox({ movies }) {
+function ListBox({ movies, isLoading, error }) {
   const [isOpen1, setIsOpen1] = useState(true);
 
   return (
@@ -129,7 +165,14 @@ function ListBox({ movies }) {
       >
         {isOpen1 ? "–" : "+"}
       </button>
-      {isOpen1 && <MovieLists movies={movies} />}
+
+      {isOpen1 && (
+        <>
+          {isLoading && <Loader />}
+          {!isLoading && !error && <MovieLists movies={movies} />}
+          {error && <ErrorMessage err={error} />}
+        </>
+      )}
     </div>
   );
 }
@@ -153,8 +196,7 @@ function MovieLists({ movies }) {
   );
 }
 
-function WatchedBox() {
-  const [watched, setWatched] = useState(tempWatchedData);
+function WatchedBox({ watched }) {
   const [isOpen2, setIsOpen2] = useState(true);
 
   return (
@@ -179,6 +221,7 @@ function WatchedSummary({ watched }) {
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
   const avgUserRating = average(watched.map((movie) => movie.userRating));
   const avgRuntime = average(watched.map((movie) => movie.runtime));
+
   return (
     <div className="summary">
       <h2>Movies you watched</h2>
