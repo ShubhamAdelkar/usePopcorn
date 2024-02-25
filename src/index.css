@@ -139,6 +139,19 @@ body {
   list-style: none;
   padding: 0.8rem 0;
   overflow: auto;
+  scrollbar-width: none;
+}
+
+.list::-webkit-scrollbar {
+  width: 0px;
+  /* Chrome, Safari, etc. */
+  height: 0px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  /* Add other styles for hover, active states, etc. */
 }
 
 .list-watched {
@@ -151,9 +164,11 @@ body {
   grid-template-columns: 4rem 1fr;
   grid-template-rows: auto auto;
   column-gap: 2.4rem;
+  scrollbar-width: 0px;
   font-size: 1.6rem;
   align-items: center;
-
+  scroll-behavior: smooth;
+  overflow: hidden;
   padding: 1.6rem 3.2rem;
   border-bottom: 1px solid var(--color-background-100);
 }
