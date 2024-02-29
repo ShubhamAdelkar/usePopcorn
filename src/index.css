@@ -354,6 +354,64 @@ body {
   justify-content: center;
 }
 
+@media only screen and (max-width: 900px) {
+  * {
+    display: none;
+    color: white;
+  }
+}
+
+/* Media Queries for Medium Devices */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  .nav-bar {
+    height: 9rem;
+    padding: 0 2.4rem;
+  }
+
+  .search {
+    width: 100%;
+  }
+
+  .list li {
+    grid-template-columns: 1fr;
+    padding: 1.6rem 2.4rem;
+  }
+
+  .list img {
+    width: 100%;
+    grid-row: initial;
+    margin-bottom: 1.6rem;
+  }
+}
+
+/* Original Styles (Large Devices) */
+.nav-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  height: 7.2rem;
+  padding: 0 3.2rem;
+  background-color: var(--color-primary);
+  border-radius: 0.9rem;
+}
+
+.main {
+  margin-top: 2.4rem;
+  height: calc(100vh - 7.2rem - 3 * 2.4rem);
+  display: flex;
+  gap: 2.4rem;
+  justify-content: center;
+}
+
+.box {
+  width: 42rem;
+  max-width: 42rem;
+  background-color: var(--color-background-500);
+  border-radius: 0.9rem;
+  position: relative;
+  overflow: auto;
+}
+
 /*
 SPACING SYSTEM (px)
 2 / 4 / 8 / 12 / 16 / 24 / 32 / 40 / 48 / 64 / 80 / 96 / 128

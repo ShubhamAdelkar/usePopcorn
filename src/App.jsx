@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import StarRating from "./StarRating";
+import './index.css';
 
 const tempMovieData = [
   {
@@ -147,10 +148,12 @@ function ErrorMessage({ err }) {
 
 function Navbar({ children }) {
   return (
-    <nav className="nav-bar">
-      <Logo />
-      {children}
-    </nav>
+    <>
+      <nav className="nav-bar">
+        <Logo />
+        {children}
+      </nav>
+    </>
   );
 }
 
