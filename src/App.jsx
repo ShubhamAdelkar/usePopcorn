@@ -54,7 +54,7 @@ const average = (arr) => {
 };
 
 export default function App() {
-  const [query, setQuery] = useState("inception");
+  const [query, setQuery] = useState("Avatar");
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -157,8 +157,8 @@ function Navbar({ children }) {
 function Logo() {
   return (
     <div className="logo">
-      <span role="img">🍿</span>
-      <h1>Popcorn</h1>
+      <span role="img"></span>
+      <h1>🍿Popcorn</h1>
     </div>
   );
 }
