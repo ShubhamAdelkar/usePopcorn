@@ -50,8 +50,8 @@ body {
 }
 
 .box {
-  width: 42rem;
-  max-width: 42rem;
+  width: 44rem;
+  max-width: 44rem;
   background-color: var(--color-background-500);
   border-radius: 0.9rem;
   position: relative;
@@ -226,7 +226,7 @@ body {
 /* ******* */
 
 .summary {
-  padding: 2.2rem 2.4rem 1.8rem 2.4rem;
+  padding: 2.2rem 2rem 1.8rem 2rem;
   border-radius: 0.9rem;
   background-color: var(--color-background-100);
   box-shadow: 0 1.2rem 2.4rem rgba(0, 0, 0, 0.2);
@@ -355,9 +355,111 @@ body {
 }
 
 @media only screen and (max-width: 600px) {
-  * {
-    display: none;
-    color: white;
+  body {
+    margin: 0px;
+    padding: 0px;
+  }
+
+  .logo {
+    & span {
+      padding: 0px;
+      margin: 0px;
+      transform: translateX(10px);
+    }
+    transform: translateY(-2px);
+    & h1 {
+      display: none;
+    }
+  }
+
+  .search {
+    width: auto;
+    font-size: 16px;
+  }
+
+  .main {
+    display: flex;
+    margin: 1.5rem;
+    align-items: center;
+    height: calc(100vh - 7.2rem - 2 * 2.4rem);
+    gap: 2.4rem;
+    display: flex;
+    overflow: auto;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  .box {
+    width: 36rem;
+    max-width: 36rem;
+    overflow: auto;
+    border-radius: 0.9rem;
+    background-color: var(--color-background-500);
+  }
+
+  .list li {
+    padding: 0px;
+    display: flex;
+    align-items: start;
+    flex-direction: row;
+    justify-content: space-between;
+
+    & h3 {
+      font-weight: 400;
+    }
+  }
+
+  .nav-bar {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    padding: 4px;
+    gap: 2rem;
+    & p {
+      font-size: 13px;
+    }
+  }
+
+  .list list-movies {
+    list-style: none;
+    padding: 1rem;
+    overflow: auto;
+    scrollbar-width: none;
+  }
+
+  .list {
+    overflow: auto;
+  }
+
+  .list li {
+    grid-template-columns: 1fr;
+    overflow: auto;
+    padding: 1.6rem 2.4rem;
+  }
+
+  .list img {
+    width: 20%;
+    grid-row: initial;
+    margin-bottom: 1.6rem;
+  }
+
+  .details {
+    height: 80rem;
+
+    & img {
+      display: none;
+    }
+
+    & section {
+      padding: 1.5rem;
+
+    }
+  }
+
+  .details-overview {
+    & h2 {
+      font-weight: 400;
+    }
   }
 }
 
@@ -382,34 +484,6 @@ body {
     grid-row: initial;
     margin-bottom: 1.6rem;
   }
-}
-
-/* Original Styles (Large Devices) */
-.nav-bar {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
-  height: 7.2rem;
-  padding: 0 3.2rem;
-  background-color: var(--color-primary);
-  border-radius: 0.9rem;
-}
-
-.main {
-  margin-top: 2.4rem;
-  height: calc(100vh - 7.2rem - 3 * 2.4rem);
-  display: flex;
-  gap: 2.4rem;
-  justify-content: center;
-}
-
-.box {
-  width: 42rem;
-  max-width: 42rem;
-  background-color: var(--color-background-500);
-  border-radius: 0.9rem;
-  position: relative;
-  overflow: auto;
 }
 
 /*
