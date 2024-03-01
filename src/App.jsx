@@ -2,52 +2,52 @@ import { useEffect, useState } from "react";
 import StarRating from "./StarRating";
 import "./index.css";
 
-const tempMovieData = [
-  {
-    imdbID: "tt1375666",
-    Title: "Inception",
-    Year: "2010",
-    Poster:
-      "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-  },
-  {
-    imdbID: "tt0133093",
-    Title: "The Matrix",
-    Year: "1999",
-    Poster:
-      "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
-  },
-  {
-    imdbID: "tt6751668",
-    Title: "Parasite",
-    Year: "2019",
-    Poster:
-      "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
-  },
-];
+// const tempMovieData = [
+//   {
+//     imdbID: "tt1375666",
+//     Title: "Inception",
+//     Year: "2010",
+//     Poster:
+//       "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
+//   },
+//   {
+//     imdbID: "tt0133093",
+//     Title: "The Matrix",
+//     Year: "1999",
+//     Poster:
+//       "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
+//   },
+//   {
+//     imdbID: "tt6751668",
+//     Title: "Parasite",
+//     Year: "2019",
+//     Poster:
+//       "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
+//   },
+// ];
 
-const tempWatchedData = [
-  {
-    imdbID: "tt1375666",
-    Title: "Inception",
-    Year: "2010",
-    Poster:
-      "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-    runtime: 148,
-    imdbRating: 8.8,
-    userRating: 10,
-  },
-  {
-    imdbID: "tt0088763",
-    Title: "Back to the Future",
-    Year: "1985",
-    Poster:
-      "https://m.media-amazon.com/images/M/MV5BZmU0M2Y1OGUtZjIxNi00ZjBkLTg1MjgtOWIyNThiZWIwYjRiXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
-    runtime: 116,
-    imdbRating: 8.5,
-    userRating: 9,
-  },
-];
+// const tempWatchedData = [
+//   {
+//     imdbID: "tt1375666",
+//     Title: "Inception",
+//     Year: "2010",
+//     Poster:
+//       "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
+//     runtime: 148,
+//     imdbRating: 8.8,
+//     userRating: 10,
+//   },
+//   {
+//     imdbID: "tt0088763",
+//     Title: "Back to the Future",
+//     Year: "1985",
+//     Poster:
+//       "https://m.media-amazon.com/images/M/MV5BZmU0M2Y1OGUtZjIxNi00ZjBkLTg1MjgtOWIyNThiZWIwYjRiXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
+//     runtime: 116,
+//     imdbRating: 8.5,
+//     userRating: 9,
+//   },
+// ];
 
 const average = (arr) => {
   if (arr.length === 0) return 0; // or return NaN
@@ -165,8 +165,8 @@ function Navbar({ children }) {
 function Logo() {
   return (
     <div className="logo">
-      <span role="img"></span>
-      <h1>🍿Popcorn</h1>
+      <span role="img">🍿</span>
+      <h1>Popcorn</h1>
     </div>
   );
 }
@@ -178,6 +178,7 @@ function Search({ query, setQuery }) {
       type="text"
       placeholder="Search movies..."
       value={query}
+      id="search"
       onChange={(e) => setQuery(e.target.value)}
     />
   );
@@ -332,11 +333,18 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
         const data = await res.json();
         setMovies(data);
         setIsLoading(false);
-        console.log(data);
       }
       getMovieDetails();
     },
     [selectedId, watched]
+  );
+
+  useEffect(
+    function () {
+      if (!title) return;
+      document.title = `${title}`;
+    },
+    [title]
   );
 
   return (
@@ -374,6 +382,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
                     maxRating={10}
                     size={26}
                     onSetRating={setUserRating}
+                    className="star"
                   />
                   {userRating > 0 && (
                     <button className="btn-add" onClick={handleAdd}>
@@ -400,8 +409,16 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
 }
 
 function WatchedSummary({ watched }) {
-  const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
+  const imdbRatings = watched.map((movie) => movie.imdbRating);
+  const validImdbRatings = imdbRatings.filter((rating) => !isNaN(rating));
+  const avgImdbRating =
+    validImdbRatings.length > 0 ? average(validImdbRatings).toFixed(1) : "0";
+
   const avgUserRating = average(watched.map((movie) => movie.userRating));
+  const formattedAvgUserRating =
+    avgUserRating % 1 === 0
+      ? avgUserRating.toFixed(0)
+      : avgUserRating.toFixed(1);
 
   // Filter out NaN runtimes and calculate total runtime
   const validRuntimes = watched
@@ -426,11 +443,11 @@ function WatchedSummary({ watched }) {
         </p>
         <p>
           <span>⭐️</span>
-          <span>{avgImdbRating.toFixed(1)}</span>
+          <span>{avgImdbRating}</span>
         </p>
         <p>
           <span>🌟</span>
-          <span>{avgUserRating.toFixed(1)}</span>
+          <span>{formattedAvgUserRating}</span>
         </p>
         <p>
           <span>⏳</span>
@@ -459,7 +476,13 @@ function WatchedMoviesLists({ watched, onDeleteWatched }) {
 
 function WatchedMovie({ movie, onDeleteWatched }) {
   const displayRuntime =
-    movie.runtime !== undefined || NaN ? `${movie.runtime} min` : "N/A";
+    !isNaN(movie.runtime) && movie.runtime !== undefined
+      ? `${movie.runtime} min`
+      : "N/A";
+
+  const displayImdbRating = !isNaN(movie.imdbRating)
+    ? movie.imdbRating.toFixed(1)
+    : "N/A";
 
   return (
     <li>
@@ -468,7 +491,7 @@ function WatchedMovie({ movie, onDeleteWatched }) {
       <div>
         <p>
           <span>⭐️</span>
-          <span>{movie.imdbRating}</span>
+          <span>{displayImdbRating}</span>
         </p>
         <p>
           <span title="User rating">🌟</span>
