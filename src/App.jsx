@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
 import "./index.css";
 
@@ -145,9 +145,9 @@ function Logo() {
 }
 
 function Search({ query, setQuery }) {
+  const inputEL = useRef(null);
   useEffect(function () {
-    const el = document.querySelector(".search");
-    el.focus();
+    inputEL.current.focus();
   }, []);
   return (
     <input
@@ -156,6 +156,7 @@ function Search({ query, setQuery }) {
       placeholder="Search movies..."
       value={query}
       id="search"
+      ref={inputEL}
       onChange={(e) => setQuery(e.target.value)}
     />
   );
