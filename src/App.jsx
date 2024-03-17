@@ -6,15 +6,13 @@ const average = (arr) => {
   if (arr.length === 0) return 0; // or return NaN
   return arr.reduce((acc, cur) => acc + cur, 0) / arr.length;
 };
-
+const API = "https://www.omdbapi.com?apikey=7d57d30b&s=";
 export default function App() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-
-  // const [watched, setWatched] = useState([]);
   const [watched, setWatched] = useState(function () {
     const storeValue = localStorage.getItem("watched");
     return JSON.parse(storeValue);
@@ -50,10 +48,9 @@ export default function App() {
         try {
           setIsLoading(true);
           setError("");
-          const res = await fetch(
-            `https://www.omdbapi.com?apikey=7d57d30b&s=${query}`,
-            { signal: controller.signal }
-          );
+          const res = await fetch(`${API}${query}`, {
+            signal: controller.signal,
+          });
 
           if (!res.ok)
             throw new Error("Something went wrong with fetching movies");
