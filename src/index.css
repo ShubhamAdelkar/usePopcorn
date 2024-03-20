@@ -354,6 +354,16 @@ body {
   justify-content: center;
 }
 
+.alternative {
+  display: flex;
+  font-size: 1.6rem;
+  flex-direction: row;
+  align-items: center;
+  height: 20vh;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
 @media only screen and (max-width: 600px) {
   body {
     margin: 0px;
@@ -392,6 +402,8 @@ body {
   .box {
     width: 36rem;
     max-width: 36rem;
+    min-height: 35rem;
+    max-height: 36rem;
     overflow: auto;
     border-radius: 0.9rem;
     background-color: var(--color-background-500);
@@ -418,6 +430,19 @@ body {
     & p {
       font-size: 13px;
     }
+  }
+
+  .alternative {
+    height: 20vh;
+  }
+
+  .watched-movie li {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .summary div {
+    font-size: 1.5rem;
   }
 
   .list list-movies {
@@ -447,16 +472,16 @@ body {
     height: 80rem;
 
     & img {
-      display: none;
+      /* display: none; */
     }
 
     & section {
       padding: 1.5rem;
-
     }
   }
 
   .details-overview {
+    flex-direction: column;
     & h2 {
       font-weight: 400;
     }
