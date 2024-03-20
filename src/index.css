@@ -470,11 +470,6 @@ body {
 
   .details {
     height: 80rem;
-
-    & img {
-      /* display: none; */
-    }
-
     & section {
       padding: 1.5rem;
     }
