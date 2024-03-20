@@ -152,7 +152,6 @@ function Search({ query, setQuery }) {
           setQuery("");
         }
       }
-      document.addEventListener("keydown", callback);
       return () => document.addEventListener("keydown", callback);
     },
     [setQuery]
