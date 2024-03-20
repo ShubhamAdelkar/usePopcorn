@@ -328,10 +328,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
         }
       }
       document.addEventListener("keydown", callback);
-
-      return function () {
-        document.removeEventListener("keydown", callback);
-      };
+      return () => document.removeEventListener("keydown", callback);
     },
     [onCloseMovie]
   );
