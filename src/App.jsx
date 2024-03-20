@@ -193,7 +193,9 @@ function ListBox({ movies, isLoading, error, onSelectMovie }) {
       >
         {isOpen1 ? "–" : "+"}
       </button>
-
+      {movies.length === 0 && !isLoading && (
+        <h2 className="alternative">Please search a movie🍿</h2>
+      )}
       {isOpen1 && (
         <>
           {isLoading && <Loader />}
@@ -453,7 +455,7 @@ function WatchedSummary({ watched }) {
       <div>
         <p>
           <span>#️⃣</span>
-          <span>{watched.length} movies</span>
+          <span>{watched.length}🎬</span>
         </p>
         <p>
           <span>⭐️</span>
@@ -499,30 +501,32 @@ function WatchedMovie({ movie, onDeleteWatched }) {
     : "N/A";
 
   return (
-    <li>
-      <img src={movie.poster} alt={`${movie.title} poster`} />
-      <h3>{movie.title}</h3>
-      <div>
-        <p>
-          <span>⭐️</span>
-          <span>{displayImdbRating}</span>
-        </p>
-        <p>
-          <span title="User rating">🌟</span>
-          <span>{movie.userRating}</span>
-        </p>
-        <p>
-          <span>⏳</span>
-          <span>{displayRuntime}</span>
-        </p>
+    <div className="watched-movie">
+      <li>
+        <img src={movie.poster} alt={`${movie.title} poster`} />
+        <h3>{movie.title}</h3>
+        <div>
+          <p>
+            <span>⭐️</span>
+            <span>{displayImdbRating}</span>
+          </p>
+          <p>
+            <span title="User rating">🌟</span>
+            <span>{movie.userRating}</span>
+          </p>
+          <p>
+            <span>⏳</span>
+            <span>{displayRuntime}</span>
+          </p>
 
-        <button
-          className="btn-delete"
-          onClick={() => onDeleteWatched(movie.imdbID)}
-        >
-          ✕
-        </button>
-      </div>
-    </li>
+          <button
+            className="btn-delete"
+            onClick={() => onDeleteWatched(movie.imdbID)}
+          >
+            ✕
+          </button>
+        </div>
+      </li>
+    </div>
   );
 }
