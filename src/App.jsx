@@ -3,6 +3,7 @@ import StarRating from "./StarRating";
 import "./index.css";
 import { useMovie } from "./useMovie";
 import { useLocalStorage } from "./useLocalStorage";
+import { useKey } from "./useKey";
 
 const average = (arr) => {
   if (arr.length === 0) return 0; // or return NaN
@@ -90,19 +91,12 @@ function Logo() {
 
 function Search({ query, setQuery }) {
   const inputEL = useRef(null);
-  useEffect(
-    function () {
-      function callback(e) {
-        if (document.activeElement === inputEL.current) return;
-        if (e.code === "Enter") {
-          inputEL.current.focus();
-          setQuery("");
-        }
-      }
-      return () => document.addEventListener("keydown", callback);
-    },
-    [setQuery]
-  );
+
+  useKey("Enter", function () {
+    if (document.activeElement === inputEL.current) return;
+    inputEL.current.focus();
+    setQuery("");
+  });
 
   return (
     <input
@@ -268,19 +262,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
     onCloseMovie();
   }
 
-  useEffect(
-    function () {
-      function callback(e) {
-        if (e.code === "Escape") {
-          onCloseMovie();
-          console.log("Closing movie");
-        }
-      }
-      document.addEventListener("keydown", callback);
-      return () => document.removeEventListener("keydown", callback);
-    },
-    [onCloseMovie]
-  );
+  useKey("Escape", onCloseMovie); // custom hook
 
   useEffect(
     function () {
