@@ -21,7 +21,7 @@ export function useMovie(query, callback) {
             throw new Error("Something went wrong with fetching movies");
 
           const data = await res.json();
-          if (data.Response === "False") throw new Error("Movie not found"); // if movie name is not make sense.
+          if (data.Response === "False") throw new Error("Movie not found"); // if movie name dosen't make sense.
 
           setMovies(data.Search);
         } catch (err) {
