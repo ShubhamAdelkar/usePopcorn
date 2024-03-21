@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 
 const API = "https://www.omdbapi.com?apikey=7d57d30b&s=";
-export function useMovie(query, handleCloseMovie) {
+export function useMovie(query, callback) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   useEffect(
     function () {
+      callback?.();
       const controller = new AbortController();
       async function fetchMovies() {
         try {
@@ -37,7 +38,7 @@ export function useMovie(query, handleCloseMovie) {
         setError("");
         return;
       }
-      handleCloseMovie();
+      //   handleCloseMovie();
       fetchMovies();
 
       return function () {
