@@ -159,7 +159,7 @@ body {
 }
 
 .list li {
-  position: relative;
+  /* position: relative; */
   display: grid;
   grid-template-columns: 4rem 1fr;
   grid-template-rows: auto auto;
