@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 
 const API = "https://www.omdbapi.com?apikey=7d57d30b&s=";
-export function useMovie(query, callback) {
+export function useMovie(query) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   useEffect(
     function () {
-      callback?.();
       const controller = new AbortController();
       async function fetchMovies() {
         try {

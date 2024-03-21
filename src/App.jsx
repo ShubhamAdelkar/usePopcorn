@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
 import "./index.css";
 import { useMovie } from "./useMovie";
+import { useLocalStorage } from "./useLocalStorage";
 
 const average = (arr) => {
   if (arr.length === 0) return 0; // or return NaN
@@ -10,13 +11,8 @@ const average = (arr) => {
 export default function App() {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-
-  const { movies, isLoading, error } = useMovie(query, handleCloseMovie);
-
-  const [watched, setWatched] = useState(function () {
-    const storeValue = localStorage.getItem("watched");
-    return storeValue ? JSON.parse(storeValue) : watched;
-  });
+  const { movies, isLoading, error } = useMovie(query);
+  const [watched, setWatched] = useLocalStorage([], "watched");
 
   function handleSelectedMovie(id) {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
@@ -33,13 +29,6 @@ export default function App() {
   function handleDeleteWatched(id) {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
-
-  useEffect(
-    function () {
-      localStorage.setItem("watched", JSON.stringify(watched));
-    },
-    [watched]
-  );
 
   return (
     <>
@@ -151,11 +140,11 @@ function ListBox({ movies, isLoading, error, onSelectMovie }) {
       >
         {isOpen1 ? "–" : "+"}
       </button>
-      {movies.length === 0 && !isLoading && (
-        <h2 className="alternative">Please search a movie🍿</h2>
-      )}
       {isOpen1 && (
         <>
+          {movies.length === 0 && !isLoading && !error && (
+            <h2 className="alternative">Please search a movie🍿</h2>
+          )}
           {isLoading && <Loader />}
           {!isLoading && !error && (
             <MovieLists movies={movies} onSelectMovie={onSelectMovie} />
